@@ -82,7 +82,7 @@ async def help(ctx):
 		`.kiss` - Поцеловать кого-то (.kiss **@имя пользователя**)
 
 
-		''')
+		''', color = 0x3498db)
 	embed1.set_footer(text=f'Vladik012 ©️ Vladik | Все права защищены')
 	embed2 = discord.Embed(tittle = 'Команды для админимтрации', 
 		description = '''
@@ -95,7 +95,7 @@ async def help(ctx):
 		`.mute` - Кинуть пользователя в мут по минутахм (.mute `время мута` `причина`)
 		`.mute_h` - Кинуть пользователя в мут по в часам (.mute `время мута` `причина`)
 
-''')
+		''', color = 0xe74c3c)
 	embed2.set_footer(text=f'Vladik012 ©️ Vladik | Все права защищены')
 	embeds = [embed1, embed2]
 
