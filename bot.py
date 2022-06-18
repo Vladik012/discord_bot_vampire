@@ -83,7 +83,7 @@ async def help(ctx):
 
 
 		''', color = 0x3498db)
-	embed1.set_footer(text=f'Vladik012 ©️ Vladik | Все права защищены')
+	embed1.set_footer(text=f'Vladik012 ©️ Vampire | Все права защищены')
 	embed2 = discord.Embed(tittle = 'Команды для админимтрации', 
 		description = '''
 
@@ -96,7 +96,7 @@ async def help(ctx):
 		`.mute_h` - Кинуть пользователя в мут по в часам (.mute `время мута` `причина`)
 
 		''', color = 0xe74c3c)
-	embed2.set_footer(text=f'Vladik012 ©️ Vladik | Все права защищены')
+	embed2.set_footer(text=f'Vladik012 ©️ Vampire | Все права защищены')
 	embeds = [embed1, embed2]
 
 	message_embed = await ctx.send(embed=embed1)
