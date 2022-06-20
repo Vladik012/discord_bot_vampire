@@ -15,7 +15,7 @@ class User(commands.Cog):
 		if t == discord.Status.online:
 			d = " В сети 🟢"
 		elif t == discord.Status.offline:
-			d = " Не в сети ⚪"
+			d = " Не в сети <:offline1:988409218153447434>"
 		elif t == discord.Status.idle:
 			d = " Не активен 🌙"
 		elif t == discord.Status.dnd:
