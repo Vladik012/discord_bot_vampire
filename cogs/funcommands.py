@@ -7,6 +7,8 @@ import aiohttp
 class User(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
+		self.invite = 'https://inlnk.ru/846XV7'
+		self.server = 'https://discord.gg/kyFQDnU4u9'
 
 	@commands.Cog.listener()
 	async def on_ready(self):
@@ -42,25 +44,44 @@ class User(commands.Cog):
 	@commands.command(name='Шар', aliases=['shar', 'шар'])
 	async def Шар(self, ctx, *, question):
 		responses = [
-    	'Это точно.',
-    	'Очень даже вряд-ли.',
-    	'Нет.',
-    	'Да, безусловно.',
-    	'Вы можете рассчитывать на это.',
-    	'Вероятно.',
-    	'Перспектива хорошая.',
-    	'Да.',
-    	'Знаки указывают - да.',	
-    	'50/50',
-    	'мой ответ - нет.',
-    	'Мои источники говорят нет.',
-    	'Перспективы не очень.',
-    	'Очень сомнительно.'
+		'Это точно.',
+		'Очень даже вряд-ли.',
+		'Нет.',
+		'Да, безусловно.',
+		'Вы можете рассчитывать на это.',
+		'Вероятно.',
+		'Перспектива хорошая.',
+		'Да.',
+		'Знаки указывают - да.',	
+		'50/50',
+		'мой ответ - нет.',
+		'Мои источники говорят нет.',
+		'Перспективы не очень.',
+		'Очень сомнительно.'
 		]
 		embed = discord.Embed(title='Шар', color=0xFF0000)
 		embed.add_field(name='Шар говорит:', value=random.choice(responses))
 		await ctx.send(content=f'[:8ball:] Шар говорит\n', embed=embed)
+	@commands.command()
+	async def invite(self, ctx):
+		embed=discord.Embed(
+            title="Пригласить бота",
+            timestamp = ctx.message.created_at,
+            color = 0xf1c40f
+        )
+
+		embed.add_field(
+			name = "Добавить бота на свой сервер",
+			value = "[Добавить]({0.invite})".format(self),
+			inline = False
+		)
+		embed.add_field(
+			name = "Оффициальный сервер бота",
+			value = "[Зайти]({0.server})".format(self),
+			inline = False
+		)
 		
+		await ctx.send(embed = embed)
 
 
 def setup(client):
