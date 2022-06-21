@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 from asyncio import sleep
 import random
+import aiohttp
 
 class User(commands.Cog):
 	def __init__(self, bot):
@@ -28,11 +29,37 @@ class User(commands.Cog):
 		HUG = ["https://c.tenor.com/217aKgnf16sAAAAC/kiss.gif",
 		"https://c.tenor.com/wPzIJLI3IeQAAAAC/kiss-hot.gif",
 		"https://c.tenor.com/FgYExssph6MAAAAC/kiss-love.gif",
-		"https://c.tenor.com/4wtQ-7iub7AAAAAC/ishupanda-happy.gif"]
+		"https://c.tenor.com/4wtQ-7iub7AAAAAC/ishupanda-happy.gif"]	
 		author = ctx.author
 		embed = discord.Embed(title="Поцелуй!", description=f"{author.display_name} поцеловал(a) {member.display_name}", color = discord.Color.purple())
 		embed.set_image(url = random.choice(HUG))
 		await ctx.send(embed=embed)
+
+
+	
+
+
+	@commands.command(name='Шар', aliases=['shar', 'шар'])
+	async def Шар(self, ctx, *, question):
+		responses = [
+    	'Это точно.',
+    	'Очень даже вряд-ли.',
+    	'Нет.',
+    	'Да, безусловно.',
+    	'Вы можете рассчитывать на это.',
+    	'Вероятно.',
+    	'Перспектива хорошая.',
+    	'Да.',
+    	'Знаки указывают - да.',	
+    	'50/50',
+    	'мой ответ - нет.',
+    	'Мои источники говорят нет.',
+    	'Перспективы не очень.',
+    	'Очень сомнительно.'
+		]
+		embed = discord.Embed(title='Шар', color=0xFF0000)
+		embed.add_field(name='Шар говорит:', value=random.choice(responses))
+		await ctx.send(content=f'[:8ball:] Шар говорит\n', embed=embed)
 		
 
 
