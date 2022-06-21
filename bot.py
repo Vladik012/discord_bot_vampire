@@ -65,6 +65,10 @@ async def on_guild_join(guild):
 		else:
 			perms = discord.Permissions(read_messages=True)
 			return await guild.create_role(name='muted', permissions=perms)
+@bot.event
+async def on_guild_remove(guild):
+	channel = bot.get_channel(988734401997316116)
+	await channel.send(f'Меня выгнали из гильдии **{guild.name}**. Теперь я на **' + str(len(bot.guilds)) + '** серверах')
 
 
 
