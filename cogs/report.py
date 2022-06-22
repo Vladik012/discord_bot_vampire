@@ -17,6 +17,19 @@ class User(commands.Cog):
 		await channel.send(f'{reason}')
 		await ctx.message.delete() #delay = 10
 		await ctx.send('Вы успешно отправили баг')
+		await ctx.message.delete(delay = 10)
+
+	@commands.command()
+	async def idea(self, ctx, *, reason):
+		id = str(ctx.guild.id)
+		if id == '978007902742790154':
+			channel = self.bot.get_channel(989030529036861520)
+			await channel.send(f'{reason}')
+			await ctx.message.delete()
+			await ctx.send('Вы успешно отправили идею')
+			await ctx.message.delete(delay=10)
+		else:
+			pass
 
 
 
