@@ -11,7 +11,7 @@ class User(commands.Cog):
 		print('mute is connected')
 	@commands.command()
 	@commands.has_permissions(manage_messages=True)
-	async def mute(self, ctx, member: discord.Member, time: int, reason ):
+	async def mute(self, ctx, member: discord.Member, time: int, *, reason ):
 		mute_role = discord.utils.get(ctx.message.guild.roles, name = 'muted')
 
 		await member.add_roles(mute_role)
@@ -21,7 +21,7 @@ class User(commands.Cog):
 
 	@commands.command()
 	@commands.has_permissions(manage_messages=True)
-	async def mute_h(self, ctx, member: discord.Member, time: int, reason ):
+	async def mute_h(self, ctx, member: discord.Member, time: int, *, reason ):
 		mute_role = discord.utils.get(ctx.message.guild.roles, name = 'muted')
 
 		await member.add_roles(mute_role)
