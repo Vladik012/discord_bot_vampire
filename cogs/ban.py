@@ -15,7 +15,7 @@ class User(commands.Cog):
 	#banM
 	@commands.command()
 	@commands.has_permissions(ban_members = True)
-	async def ban_m(self, ctx, member: discord.Member, time: int, reason):
+	async def ban_m(self, ctx, member: discord.Member, time: int, *, reason):
 		await ctx.send(f'{member.mention} **забанен** \n Продолжительность бана: *{time}m* \n Причина бана: *{reason}*')
 		await member.send(f'Тебя забанили на сервере {ctx.guild.name} по причине {reason} на *{time}m*')
 
@@ -32,7 +32,7 @@ class User(commands.Cog):
 	#banH
 	@commands.command()
 	@commands.has_permissions(ban_members = True)
-	async def ban(self, ctx, member: discord.Member, time: int, reason):
+	async def ban(self, ctx, member: discord.Member, time: int, *, reason):
 		await ctx.send(f'{member.mention} **забанен** \n Продолжительность бана: *{time}h* \n Причина бана: *{reason}*')
 		await member.send(f'Тебя забанили на сервере {ctx.guild.name} по причине {reason} на *{time}h*')
 
@@ -48,7 +48,7 @@ class User(commands.Cog):
 	#banD
 	@commands.command()
 	@commands.has_permissions(ban_members = True)
-	async def ban(self, ctx, member: discord.Member, time: int, reason):
+	async def ban(self, ctx, member: discord.Member, time: int, *, reason):
 		await ctx.send(f'{member.mention} **забанен** \n Продолжительность бана: *{time}d* \n Причина бана: *{reason}*')
 		await member.send(f'Тебя забанили на сервере {ctx.guild.name} по причине {reason} на *{time}d*')
 
