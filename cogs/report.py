@@ -12,7 +12,7 @@ class User(commands.Cog):
 		print('report info is connected')
 
 	@commands.command()
-	async def bag(self, ctx, *, reason):
+	async def bug(self, ctx, *, reason):
 		channel = self.bot.get_channel(988903598786240592)
 		await channel.send(f'{reason}')
 		await ctx.message.delete() #delay = 10
