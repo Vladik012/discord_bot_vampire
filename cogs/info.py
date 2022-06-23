@@ -29,6 +29,10 @@ class User(commands.Cog):
 		emb.set_thumbnail(url=member.avatar_url)
 		emb.set_footer(text=f'Запрошено: {ctx.message.author}', icon_url=ctx.message.author.avatar_url)
 		await ctx.send(embed = emb)
+	@info.error
+	async def info_error( self, ctx, error ):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого информацию хотите посмотреть' )
 
 
 def setup(client):

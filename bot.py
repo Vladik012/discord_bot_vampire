@@ -107,7 +107,7 @@ async def help(ctx):
 	embeds = [embed1, embed2]
 
 	message_embed = await ctx.send(embed=embed1)
-	page = pag(bot, message_embed, only=ctx.author, use_more = False, embeds=embeds, footer = False, timeout = 120)
+	page = pag(bot, message_embed, only=ctx.author, use_more = False, embeds=embeds, timeout = 120)
 	await page.start()
 
 

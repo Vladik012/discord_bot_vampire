@@ -15,7 +15,7 @@ class User(commands.Cog):
 	#banM
 	@commands.command()
 	@commands.has_permissions(ban_members = True)
-	async def ban_m(self, ctx, member: discord.Member, time: int, *, reason):
+	async def ban_m(self, ctx, member: discord.Member, time: int, *, reason=None):
 		await ctx.send(f'{member.mention} **забанен** \n Продолжительность бана: *{time}m* \n Причина бана: *{reason}*')
 		await member.send(f'Тебя забанили на сервере {ctx.guild.name} по причине {reason} на *{time}m*')
 
@@ -32,7 +32,7 @@ class User(commands.Cog):
 	#banH
 	@commands.command()
 	@commands.has_permissions(ban_members = True)
-	async def ban(self, ctx, member: discord.Member, time: int, *, reason):
+	async def ban_h(self, ctx, member: discord.Member, time: int, *, reason):
 		await ctx.send(f'{member.mention} **забанен** \n Продолжительность бана: *{time}h* \n Причина бана: *{reason}*')
 		await member.send(f'Тебя забанили на сервере {ctx.guild.name} по причине {reason} на *{time}h*')
 
@@ -61,6 +61,26 @@ class User(commands.Cog):
 		await ctx.send(f'*У {member.mention} закончился бан*')
 		link = await ctx.channel.create_invite(max_age=300)
 		await member.send(f'Тебя разбанили на сервере {ctx.guild.name}! {link}')
+	@ban_m.error
+	async def ban_m_error( self, ctx, error ):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого нужно забанить' )
+		if isinstance( error, commands.MissingPermissions ):
+			await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
+
+	@ban_h.error
+	async def ban_h_error( self, ctx, error ):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого нужно забанить' )
+		if isinstance( error, commands.MissingPermissions ):
+			await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
+
+	@ban.error
+	async def ban_error( self, ctx, error ):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого нужно забанить' )
+		if isinstance( error, commands.MissingPermissions ):
+			await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
 
 
 def setup(client):

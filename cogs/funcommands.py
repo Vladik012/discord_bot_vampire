@@ -62,6 +62,21 @@ class User(commands.Cog):
 		embed = discord.Embed(title='Шар', color=0xFF0000)
 		embed.add_field(name='Шар говорит:', value=random.choice(responses))
 		await ctx.send(content=f'[:8ball:] Шар говорит\n', embed=embed)
+
+	@Шар.error
+	async def clear_error( self, ctx, error ):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите вопрос' )
+	@kiss.error
+	async def kiss_error( self, ctx, error ):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого целуете' )
+	@hug.error
+	async def hug_error( self, ctx, error ):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого обнимаете' )
+
+
 	@commands.command()
 	async def invite(self, ctx):
 		embed=discord.Embed(
