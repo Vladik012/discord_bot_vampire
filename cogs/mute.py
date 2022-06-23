@@ -29,6 +29,15 @@ class User(commands.Cog):
 		await sleep(time * 360)
 		await member.remove_roles(mute_role)
 
+	@commands.command()
+	@commands.has_permissions(manage_messages=True)
+	async def unmute(self, ctx, member: discord.Member):
+		mute_role = discord.utils.get(ctx.message.guild.roles, name = 'muted')
+		await member.remove_roles(mute_role)
+
+		await ctx.send(f'Был снят мут с пользователя **{member.mention}**')
+		
+
 	@mute.error
 	async def mute( self, ctx, error ):
 		if isinstance( error, commands.MissingRequiredArgument ):
@@ -39,6 +48,12 @@ class User(commands.Cog):
 	async def mute_h( self, ctx, error ):
 		if isinstance( error, commands.MissingRequiredArgument ):
 			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого кинуть в мут' )
+		if isinstance( error, commands.MissingPermissions ):
+			await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
+	@unmute.error
+	async def unmute_error(self, ctx, error):
+		if isinstance( error, commands.MissingRequiredArgument ):
+			await ctx.send( f'{ctx.author.name} пожалуйста укажите у кого убрать мут' )
 		if isinstance( error, commands.MissingPermissions ):
 			await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
 
