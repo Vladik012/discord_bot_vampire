@@ -35,7 +35,7 @@ class User(commands.Cog):
 			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого кинуть в мут' )
 		if isinstance( error, commands.MissingPermissions ):
 			await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
-	@mute.error
+	@mute_h.error
 	async def mute_h( self, ctx, error ):
 		if isinstance( error, commands.MissingRequiredArgument ):
 			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого кинуть в мут' )
