@@ -50,6 +50,9 @@ async def changeprefix(ctx, prefix):
 		json.dump(prefixes, f, indent=4)
 
 	await ctx.send(f'Перфикс изменен на {prefix}')
+	
+	
+	
 bot.remove_command('help')
 
 @bot.event
@@ -130,6 +133,7 @@ async def help(ctx):
 		`.шар` - Комманда шар (.шар **Ваш вопрос**)
 		`.invite` - Пригласить бота и зайти на сервер поддержки
 		`.bug` - сообщить о баге
+		
 
 
 		''', color = 0x3498db)
@@ -144,6 +148,7 @@ async def help(ctx):
 		`.clear` - Очистка сообщений (.clear **количество очищаемых сообщений**)
 		`.mute` - Кинуть пользователя в мут по минутахм (.mute `время мута` `причина`)
 		`.mute_h` - Кинуть пользователя в мут по в часам (.mute `время мута` `причина`)
+		`.changeprefix` - Изменть префикс на сервере (.changeprefix **новый префикс**)
 
 		''', color = 0xe74c3c)
 	embed2.set_footer(text=f'Vladik012 ©️ Vampire | Все права защищены')
