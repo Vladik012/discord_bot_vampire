@@ -98,6 +98,19 @@ class User(commands.Cog):
 		
 		await ctx.send(embed = embed)
 
+	@commands.command()
+	async def кости(self, ctx):
+		r = random.randint(1, 6)
+		rb = random.randint(1, 6)
+		embed = discord.Embed(title = 'Кости', color=0)
+		if r>rb:
+			embed = discord.Embed(title = 'Вы выиграли',description = f'У бота {rb}, а у вас {r}', color = 0x2ecc71)
+		elif r<rb:
+			embed = discord.Embed(title = 'Вы проиграли',description = f'У бота {rb}, а у вас {r}', color = 0xe74c3c)
+		else:
+			embed = discord.Embed(title = 'Ничья',description = f'У бота {rb}, а у вас {r}', color = 0)
+		await ctx.send(embed = embed)
+
 
 def setup(client):
 	client.add_cog(User(client))
