@@ -6,7 +6,50 @@ from discord.utils import get
 import json
 from Cybernator import Paginator as pag
 
-bot = commands.Bot(command_prefix='.', intents=discord.Intents.all())
+def get_prefix(bot, message):
+	with open('prefixes.json', 'r') as f:
+		prefixes = json.load(f)
+
+	return prefixes[str(message.guild.id)]
+
+bot = commands.Bot(command_prefix = get_prefix)
+
+
+@bot.event
+async def on_ready():
+	print('Я готов к работе')
+
+@bot.event
+async def on_guild_join(guild):
+	with open('prefixes.json', 'r') as f:
+		prefixes = json.load(f)
+
+	prefixes[str(guild.id)] = '.'
+
+	with open('prefixes.json', 'w') as f:
+		json.dump(prefixes, f, indent=4)
+
+@bot.event
+async def on_guild_remove(guild):
+	with open('prefixes.json', 'r') as f:
+		prefixes = json.load(f)
+
+	prefixes.pop[str(guild.id)]
+
+	with open('prefixes.json', 'w') as f:
+		json.dump(prefixes, f, indent=4)
+
+@bot.command()
+async def changeprefix(ctx, prefix):
+	with open('prefixes.json', 'r') as f:
+		prefixes = json.load(f)
+
+	prefixes[str(ctx.guild.id)] = prefix
+
+	with open('prefixes.json', 'w') as f:
+		json.dump(prefixes, f, indent=4)
+
+	await ctx.send(f'Перфикс изменен на {prefix}')
 bot.remove_command('help')
 
 @bot.event
@@ -109,6 +152,9 @@ async def help(ctx):
 	message_embed = await ctx.send(embed=embed1)
 	page = pag(bot, message_embed, only=ctx.author, use_more = False, embeds=embeds, timeout = 120)
 	await page.start()
+
+
+
 
 
 
