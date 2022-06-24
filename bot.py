@@ -12,7 +12,7 @@ from Cybernator import Paginator as pag
 
 #	return prefixes[str(message.guild.id)]
 
-bot = commands.Bot(command_prefix = !)
+bot = commands.Bot(command_prefix = '.')
 
 
 @bot.event
