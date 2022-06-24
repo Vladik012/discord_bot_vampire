@@ -18,6 +18,7 @@ bot = commands.Bot(command_prefix = get_prefix)
 @bot.event
 async def on_ready():
 	print('Я готов к работе')
+	
 
 @bot.event
 async def on_guild_join(guild):
