@@ -33,7 +33,7 @@ class User(commands.Cog):
 			pass
 
 	@bug.error
-	async def bug( self, ctx, error ):
+	async def bug_error( self, ctx, error ):
 		if isinstance( error, commands.MissingRequiredArgument ):
 			await ctx.send( f'{ctx.author.name} пожалуйста укажите баг' )
 		if isinstance( error, commands.MissingPermissions ):
