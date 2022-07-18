@@ -12,7 +12,9 @@ from Cybernator import Paginator as pag
 
 #	return prefixes[str(message.guild.id)]
 
-bot = commands.Bot(command_prefix = '.')
+intents = discord.Intents(messages=True, members=True)
+
+bot = commands.Bot(command_prefix = '.', intents = intents)
 
 
 @bot.event
@@ -66,8 +68,8 @@ async def on_ready():
 		await sleep(15)
 		await bot.change_presence(status = discord.Status.online, activity = discord.Activity(name = f'за {len(bot.guilds)} серверами', type = discord.ActivityType.watching)) #Инфа о количестве серверов, на котором находится бот.
 		await sleep(15)	
-		#await bot.change_presence(status = discord.Status.online, activity = discord.Activity(name = f'за {len(bot.users)} пользователями', type = discord.ActivityType.watching))
-		#await sleep(15)
+		await bot.change_presence(status = discord.Status.online, activity = discord.Activity(name = f'за {len(bot.users)} пользователями', type = discord.ActivityType.watching))
+		await sleep(15)
 
 
 @bot.command()
