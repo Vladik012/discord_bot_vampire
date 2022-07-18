@@ -21,7 +21,6 @@ class User(commands.Cog):
 		await ctx.send(embed = embed)
 
 	
-	
 
 
 def setup(client):
