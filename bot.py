@@ -12,7 +12,7 @@ from Cybernator import Paginator as pag
 
 #	return prefixes[str(message.guild.id)]
 
-intents = discord.Intents(messages=True, members=True)
+intents = discord.Intents().all()
 
 bot = commands.Bot(command_prefix = '.', intents = intents)
 
