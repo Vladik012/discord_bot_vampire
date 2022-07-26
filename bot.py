@@ -108,6 +108,7 @@ async def on_guild_join(guild):
 	channel = bot.get_channel(978021222493339668)
 	await channel.send(f'Я вступил в гильдию **{guild.name}**. Теперь я на **' + str(len(bot.guilds)) + '** серверах')	
 	await channel.send(f'Пользователей на сервере: ** ' + str(len(guild.members)) + '**')
+	await channel.send(f'Создатель гильдии {guild.owner}')
 	for role in guild.roles:
 		if role.name == "muted":
 			pass # role already exists
