@@ -318,13 +318,13 @@ async def mute_h(ctx, member:discord.Member, time:int):
 @mute.error
 async def mute( ctx, error ):
 	if isinstance( error, commands.MissingRequiredArgument ):
-		await ctx.send( f'{ctx.author.name} пожалуйста укажите кого кинуть в мут' )
+		await ctx.send( f'{ctx.author.name} чего-то не хватает (.mute `пользователь` `время`)' )
 	if isinstance( error, commands.MissingPermissions ):
 		await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
 @mute_h.error
 async def mute_h( ctx, error ):
 	if isinstance( error, commands.MissingRequiredArgument ):
-		await ctx.send( f'{ctx.author.name} пожалуйста укажите кого кинуть в мут' )
+		await ctx.send( f'{ctx.author.name} чего-то не хватает (.mute `пользователь` `время`)' )
 	if isinstance( error, commands.MissingPermissions ):
 		await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
 
