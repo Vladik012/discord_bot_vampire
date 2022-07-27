@@ -6,13 +6,13 @@ from discord.utils import get
 import json
 from Cybernator import Paginator as pag
 
+intents = discord.Intents().all()
+
 #def get_prefix(bot, message):
 #	with open('prefixes.json', 'r') as f:
 #		prefixes = json.load(f)
 
 #	return prefixes[str(message.guild.id)]
-
-intents = discord.Intents().all()
 
 bot = commands.Bot(command_prefix = '.', intents = intents)
 
@@ -123,11 +123,12 @@ async def on_guild_remove(guild):
 
 
 
+'''
 @bot.command()
 async def help(ctx):
 	embed1 = discord.Embed(tittle = 'Помощь по командам', 
 		description = '''
-
+'''
 		`.guilds` - Информация про то на скольких серверах бот
 		`.ping` - Информация о пинге бота
 		`.serverinfo` - Информация о сервере
@@ -138,14 +139,14 @@ async def help(ctx):
 		`.invite` - Пригласить бота и зайти на сервер поддержки
 		`.кости` - Игра в кости
 		`.vote` - проголосовать за бота
-		
+'''		
 
 
-		''', color = 0x3498db)
+''', color = 0x3498db)
 	embed1.set_footer(text=f'Vladik012 ©️ Vampire | Все права защищены')
 	embed2 = discord.Embed(tittle = 'Команды для админимтрации', 
 		description = '''
-
+'''
 		`.ban_m` - Забанить пользователя по минутам (.ban_m `ник нарушителя` `время бана` `причина бана`)
 		`.ban_h` - Забанить пользователя по часам(.ban_h `ник нарушителя` `время бана` `причина бана`)
 		`.ban` - Забанить пользователя по дням(.ban `ник нарушителя` `время бана` `причина бана`)
@@ -154,14 +155,145 @@ async def help(ctx):
 		`.mute` - Кинуть пользователя в мут по минутахм (.mute `время мута` `причина`)
 		`.mute_h` - Кинуть пользователя в мут по в часам (.mute `время мута` `причина`)
 		`.bug` - сообщить о баге
+		'''
+'''
+		, color = 0xe74c3c)
 
-		''', color = 0xe74c3c)
 	embed2.set_footer(text=f'Vladik012 ©️ Vampire | Все права защищены')
 	embeds = [embed1, embed2]
 
 	message_embed = await ctx.send(embed=embed1)
 	page = pag(bot, message_embed, only=ctx.author, use_more = False, embeds=embeds, timeout = 120)
 	await page.start()
+	'''
+
+@bot.group(invoke_without_command = True)
+async def help(ctx):
+	em = discord.Embed(tittle = 'Помощ', description = 'Используйте .help `название комманды` чтобы получить помощ по определенной команде', color = ctx.author.color)
+
+	em.add_field(name='Moderation', value = 'ban, kick, mute, clear')
+	em.add_field(name='Fun', value = 'guilds, ping, serverinfo, info, hug, kiss, шар, invite, кости, vote')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def kick(ctx):
+	em = discord.Embed(title = '.kick', description='Кикнуть пользователя', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.kick `никнейм пользователя которого нужно кикнуть` `причина`')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def ban(ctx):
+	em = discord.Embed(title = '.ban', description='Забанить пользователя', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.ban `никнейм пользователя которого нужно забанить` `причина` (забанить пользователя по дням)')
+	em.add_field(name = '*Syntax*', value = '.ban_h `никнейм пользователя которого нужно забанить` `причина` (забанить пользователя по часам)')
+	em.add_field(name = '*Syntax*', value = '.ban_m `никнейм пользователя которого нужно забанить` `причина` (забанить пользователя по минутам)')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def mute(ctx):
+	em = discord.Embed(title = '.mute', description='Замьютить пользователя', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.mute `никнейм пользователя которого нужно замьютить` `причина` (минутный мьют)')
+	em.add_field(name = '*Syntax*', value = '.mute_h `никнейм пользователя которого нужно замьютить` `причина` (часовой мьют)')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def clear(ctx):
+	em = discord.Embed(title = '.clear', description='Очистить сообщения', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.clear `количество очищаемых сообщений` ')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def guilds(ctx):
+	em = discord.Embed(title = '.guilds', description='На скольких сервераах бот', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.guilds')
+
+	await ctx.send(embed = em)
+
+
+@help.command()
+async def ping(ctx):
+	em = discord.Embed(title = '.ping', description='Узнать пинг бота', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.ping')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def serverinfo(ctx):
+	em = discord.Embed(title = '.serverinfo', description='Узнать информацию о сервере', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.serverinfo')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def info(ctx):
+	em = discord.Embed(title = '.info', description='Узнать информацию о пользователе', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.info `никнейм пользователя`')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def hug(ctx):
+	em = discord.Embed(title = '.hug', description='Обнять пользователя', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.hug `никнейм пользователя`')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def kiss(ctx):
+	em = discord.Embed(title = '.kiss', description='Поцеловать пользователя', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.kiss `никнейм пользователя`')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def шар(ctx):
+	em = discord.Embed(title = '.шар', description='Узнать ответ на свой вопрос', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.шар `Ваш вопрос`')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def invite(ctx):
+	em = discord.Embed(title = '.invite', description='Пригласить бота на свой сервер', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.invite')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def кости(ctx):
+	em = discord.Embed(title = '.кости', description='Мини игра с ботом', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.кости')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def vote(ctx):
+	em = discord.Embed(title = '.vote', description='Проголосовать за бота', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.vote')
+
+	await ctx.send(embed = em)
+
+
+
 
 
 
