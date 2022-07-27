@@ -295,6 +295,41 @@ async def vote(ctx):
 
 
 
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def mute(ctx, member:discord.Member, time:int):
+	mute_role = discord.utils.get(ctx.message.guild.roles, name = 'muted')
+	await member.add_roles(mute_role)
+	await ctx.send(f'Был кинут в мут пользователь {member.mention}, на время {time} м')
+	await sleep(time * 60)
+	await member.remove_roles(mute_role)
+
+@bot.command()
+@commands.has_permissions(manage_messages=True)
+async def mute_h(ctx, member:discord.Member, time:int):
+	mute_role = discord.utils.get(ctx.message.guild.roles, name = 'muted')
+	await member.add_roles(mute_role)
+	await ctx.send(f'Был кинут в мут пользователь {member.mention}, на время {time} ч')
+	await sleep(time * 360)
+	await member.remove_roles(mute_role)
+
+
+
+@mute.error
+async def mute( ctx, error ):
+	if isinstance( error, commands.MissingRequiredArgument ):
+		await ctx.send( f'{ctx.author.name} пожалуйста укажите кого кинуть в мут' )
+	if isinstance( error, commands.MissingPermissions ):
+		await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
+@mute_h.error
+async def mute_h( ctx, error ):
+	if isinstance( error, commands.MissingRequiredArgument ):
+		await ctx.send( f'{ctx.author.name} пожалуйста укажите кого кинуть в мут' )
+	if isinstance( error, commands.MissingPermissions ):
+		await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
+
+
+
 
 
 
