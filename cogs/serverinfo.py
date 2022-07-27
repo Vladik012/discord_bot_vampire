@@ -37,7 +37,7 @@ class User(commands.Cog):
 		embed.add_field(name="Server ID", value=id, inline=False)
 		embed.add_field(name="Регион", value=region, inline=False)
 		embed.add_field(name="Пользователей", value=memberCount, inline=False)
-		embed.add_field(name="Каналов", value=f'{channels}', inline=False) 
+		embed.add_field(name="Всего каналов", value=f'{channels}', inline=False) 
 		embed.add_field(name="Текстовых каналов", value=f'{text_channels}', inline=False) 
 		embed.add_field(name=" Голосовых каналов", value=f'{voice_channels}', inline=False) 
 
