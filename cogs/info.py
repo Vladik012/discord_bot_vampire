@@ -31,7 +31,7 @@ class User(commands.Cog):
 		await ctx.send(embed = emb)
 	@info.error
 	async def info_error( self, ctx, error ):
-		if isinstance( error, commands.MissingRequiredArgument ):
+		if isinstance( error, commands.CommandInvokeError ):
 			await ctx.send( f'{ctx.author.name} пожалуйста укажите кого информацию хотите посмотреть' )
 
 
