@@ -172,7 +172,7 @@ async def help(ctx):
 	em = discord.Embed(tittle = 'Помощ', description = 'Используйте .help `название комманды` чтобы получить помощ по определенной команде', color = ctx.author.color)
 
 	em.add_field(name='Moderation', value = 'ban, kick, mute, clear')
-	em.add_field(name='Fun', value = 'guilds, ping, serverinfo, info, hug, kiss, шар, invite, кости, vote')
+	em.add_field(name='Fun', value = 'guilds, ping, serverinfo, info, avatar, hug, kiss, шар, invite, кости, vote')
 
 	await ctx.send(embed = em)
 
@@ -241,6 +241,14 @@ async def info(ctx):
 	em = discord.Embed(title = '.info', description='Узнать информацию о пользователе', color = ctx.author.color)
 
 	em.add_field(name = '*Syntax*', value = '.info `никнейм пользователя`')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def avatar(ctx):
+	em = discord.Embed(title = '.avatar', description='Отобразить аватар пользователя', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.avatar `Ник пользователя`')
 
 	await ctx.send(embed = em)
 
