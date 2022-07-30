@@ -6,42 +6,49 @@ from discord.utils import get
 import json
 from Cybernator import Paginator as pag
 
+import collections
+from pymongo import MongoClient
+
+cluster = MongoClient('mongodb+srv://Vladik012:Vladik0713@vladik012.z3qq6fz.mongodb.net/?retryWrites=true&w=majority')
+collusers = cluster.vladik012data.collusers
+collservers = cluster.vladik012data.collservers
+
 intents = discord.Intents().all()
 
-#def get_prefix(bot, message):
-#	with open('prefixes.json', 'r') as f:
-#		prefixes = json.load(f)
 
-#	return prefixes[str(message.guild.id)]
+def get_prefix(bot, message):
+	prefix = collservers.find_one({"_id": message.guild.id})["prefix"]
+	return prefix
 
-bot = commands.Bot(command_prefix = '.', intents = intents)
+bot = commands.Bot(command_prefix = get_prefix, intents = intents)
+
+
+	
+
+@bot.event
+async def on_guild_join(guild):
+	collservers.insert_one({"_id": guild.id, "prefix": '.'})
+	
 
 
 @bot.event
-async def on_ready():
-	print('Я готов к работе')
-	
+async def on_guild_remove(guild):
+	collservers.delete_one(
+		{
+			'_id': guild.id
+		}
+	)
 
-#@bot.event
-#async def on_guild_join(guild):
-#	with open('prefixes.json', 'r') as f:
-#		prefixes = json.load(f)
-#
-#	prefixes[str(guild.id)] = '.'
-#
-#	with open('prefixes.json', 'w') as f:
-#		json.dump(prefixes, f, indent=4)
+@bot.command()
+async def prefix(ctx, prefix):
+	if prefix is None:
+		await ctx.send('Префикс не найден')
+	else:
+		collservers.update_one({'_id': ctx.guild.id}, {'$set': {'prefix': prefix}})
+		await ctx.send(f'Новый префикс: {prefix}')
 
-#@bot.event
-#async def on_guild_remove(guild):
-#	with open('prefixes.json', 'r') as f:
-#		prefixes = json.load(f)
-#
-#	prefixes.pop[str(guild.id)]
-#
-#	with open('prefixes.json', 'w') as f:
-#		json.dump(prefixes, f, indent=4)
-#
+
+
 #@bot.command()
 #async def changeprefix(ctx, prefix):
 #	with open('prefixes.json', 'r') as f:
@@ -62,6 +69,16 @@ bot.remove_command('help')
 async def on_ready():
 	print('Я готов к работе')
 
+	for guild in bot.guilds:
+		for members in guild.members:
+			
+			values = {
+				'_id': guild.id,
+				'prefix': '.'
+			}
+		if collservers.count_documents({'_id':guild.id, 'prefix': '.'}) == 0:
+			collservers.insert_one(values)
+
 
 	while True:
 		await bot.change_presence(status = discord.Status.online, activity = discord.Activity(name = f'.help', type = discord.ActivityType.playing)) #Идёт инфа о команде помощи (префикс изменить)
@@ -70,6 +87,8 @@ async def on_ready():
 		await sleep(15)	
 		await bot.change_presence(status = discord.Status.online, activity = discord.Activity(name = f'за {len(bot.users)} пользователями', type = discord.ActivityType.watching))
 		await sleep(15)
+	
+	
 
 
 @bot.command()
@@ -121,7 +140,9 @@ async def on_guild_remove(guild):
 	await channel.send(f'Меня выгнали из гильдии **{guild.name}**. Теперь я на **' + str(len(bot.guilds)) + '** серверах')
 
 
-
+#@bot.command()
+#async def test(ctx):
+#	await ctx.send(f'{bot.guilds}')
 
 '''
 @bot.command()
@@ -237,18 +258,18 @@ async def serverinfo(ctx):
 	await ctx.send(embed = em)
 
 @help.command()
-async def info(ctx):
-	em = discord.Embed(title = '.info', description='Узнать информацию о пользователе', color = ctx.author.color)
-
-	em.add_field(name = '*Syntax*', value = '.info `никнейм пользователя`')
-
-	await ctx.send(embed = em)
-
-@help.command()
 async def avatar(ctx):
 	em = discord.Embed(title = '.avatar', description='Отобразить аватар пользователя', color = ctx.author.color)
 
 	em.add_field(name = '*Syntax*', value = '.avatar `Ник пользователя`')
+
+	await ctx.send(embed = em)
+
+@help.command()
+async def info(ctx):
+	em = discord.Embed(title = '.info', description='Узнать информацию о пользователе', color = ctx.author.color)
+
+	em.add_field(name = '*Syntax*', value = '.info `никнейм пользователя`')
 
 	await ctx.send(embed = em)
 
