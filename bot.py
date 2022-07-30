@@ -46,12 +46,14 @@ async def prefix(ctx, prefix):
 		await ctx.send('Префикс не найден')
 	else:
 		collservers.update_one({'_id': ctx.guild.id}, {'$set': {'prefix': prefix}})
-		await ctx.send(f'Новый префикс: {prefix}')
+		await ctx.send(f'Новый префикс: `{prefix}`')
 
 @prefix.error
 async def prefix_error(ctx, error):
 	if isinstance(error, commands.MissingPermissions):
 		await ctx.send( f'{ctx.author.name} вы не можете использовать данную команду' )
+	if isinstance( error, commands.MissingRequiredArgument ):
+		await ctx.send( f'{ctx.author.name} введите префикс' )
 
 
 
