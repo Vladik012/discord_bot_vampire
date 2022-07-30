@@ -80,6 +80,10 @@ async def on_ready():
 			collservers.insert_one(values)
 
 
+	
+
+@bot.event
+async def on_ready():
 	while True:
 		await bot.change_presence(status = discord.Status.online, activity = discord.Activity(name = f'.help', type = discord.ActivityType.playing)) #Идёт инфа о команде помощи (префикс изменить)
 		await sleep(15)
