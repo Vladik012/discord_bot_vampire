@@ -39,7 +39,7 @@ async def on_guild_remove(guild):
 		}
 	)
 
-@bot.command()
+@bot.command(administrator = True)
 async def prefix(ctx, prefix):
 	if prefix is None:
 		await ctx.send('Префикс не найден')
