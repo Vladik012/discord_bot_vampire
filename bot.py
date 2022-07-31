@@ -6,12 +6,12 @@ from discord.utils import get
 import json
 from Cybernator import Paginator as pag
 
-import collections
 from pymongo import MongoClient
 
 cluster = MongoClient('mongodb+srv://Vladik012:Vladik0713@vladik012.z3qq6fz.mongodb.net/?retryWrites=true&w=majority')
-collusers = cluster.vladik012data.collusers
+
 collservers = cluster.vladik012data.collservers
+collection = cluster.ecodb.colldb
 
 intents = discord.Intents().all()
 
@@ -20,24 +20,15 @@ def get_prefix(bot, message):
 	prefix = collservers.find_one({"_id": message.guild.id})["prefix"]
 	return prefix
 
+
+
+
 bot = commands.Bot(command_prefix = get_prefix, intents = intents)
 
 
-	
-
-@bot.event
-async def on_guild_join(guild):
-	collservers.insert_one({"_id": guild.id, "prefix": '.'})
-	
 
 
-@bot.event
-async def on_guild_remove(guild):
-	collservers.delete_one(
-		{
-			'_id': guild.id
-		}
-	)
+
 
 @bot.command()
 @commands.has_permissions(administrator = True)
@@ -56,19 +47,6 @@ async def prefix_error(ctx, error):
 		await ctx.send( f'{ctx.author.name} введите префикс' )
 
 
-
-#@bot.command()
-#async def changeprefix(ctx, prefix):
-#	with open('prefixes.json', 'r') as f:
-#		prefixes = json.load(f)
-#
-#	prefixes[str(ctx.guild.id)] = prefix
-#
-#	with open('prefixes.json', 'w') as f:
-#		json.dump(prefixes, f, indent=4)
-#
-#	await ctx.send(f'Перфикс изменен на {prefix}')
-	
 	
 	
 bot.remove_command('help')
@@ -78,17 +56,46 @@ async def on_ready():
 	print('Я готов к работе')
 
 	for guild in bot.guilds:
-		for members in guild.members:
+		for member in guild.members:
 			
 			values = {
 				'_id': guild.id,
 				'prefix': '.'
 			}
-		if collservers.count_documents({'_id':guild.id, 'prefix': '.'}) == 0:
+
+			
+
+		if collservers.count_documents({'_id': guild.id, 'prefix': '.'}) == 0:
 			collservers.insert_one(values)
+		
+@bot.event
+async def on_ready():
+	for guild in bot.guilds:
+		for member in guild.members:
+			post = {
+				"_id": member.id,
+				"balance": 300,
+				"xp": 0,
+				"lvl": 1
+			}
+
+			if collection.count_documents({"_id": member.id}) == 0:
+				collection.insert_one(post)
+
+@bot.event
+async def on_member_join(member):
+	post = {
+		"_id": member.id,
+		"balance": 300,
+		"xp": 0,
+		"lvl": 1
+	}
+
+	if collection.count_documents({"_id": member.id}) == 0:
+		collection.insert_one(post)
 
 
-	
+
 
 @bot.event
 async def on_ready():
@@ -99,6 +106,8 @@ async def on_ready():
 		await sleep(15)	
 		await bot.change_presence(status = discord.Status.online, activity = discord.Activity(name = f'за {len(bot.users)} пользователями', type = discord.ActivityType.watching))
 		await sleep(15)
+
+
 	
 	
 
@@ -134,22 +143,15 @@ async def reload(ctx, extension):
 		await ctx.message.delete(delay = 10)
 		await ctx.send('Error')
 
+
 @bot.event
 async def on_guild_join(guild):
-	channel = bot.get_channel(978021222493339668)
-	await channel.send(f'Я вступил в гильдию **{guild.name}**. Теперь я на **' + str(len(bot.guilds)) + '** серверах')	
-	await channel.send(f'Пользователей на сервере: ** ' + str(len(guild.members)) + '**')
-	await channel.send(f'Создатель гильдии {guild.owner}')
-	for role in guild.roles:
-		if role.name == "muted":
-			pass # role already exists
-		else:
-			perms = discord.Permissions(read_messages=True)
-			return await guild.create_role(name='muted', permissions=perms)
+	collservers.insert_one({"_id": guild.id, "prefix": '.'})
+	#collection.insert_one({"_id": member.id})
+	
 @bot.event
 async def on_guild_remove(guild):
-	channel = bot.get_channel(988734401997316116)
-	await channel.send(f'Меня выгнали из гильдии **{guild.name}**. Теперь я на **' + str(len(bot.guilds)) + '** серверах')
+	collservers.delete_one(	{'_id': guild.id})
 
 
 #@bot.command()
