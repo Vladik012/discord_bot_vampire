@@ -409,4 +409,4 @@ for filename in os.listdir("./cogs"):
 		bot.load_extension(f"cogs.{filename[:-3]}")
 
 
-bot.run('MTAxMTM0ODc0MDM2OTU1OTYwMw.GCOEbP.jAap_V_zH_GBove8P3amBYjVVsLd5nY8laHomg')
+bot.run('TTAxMTM0ODc0MDM2OTU1OTYwMw.GCOEbP.jAap_V_zH_GBove8P3amBYjVVsLd5nY8laHomg')
