@@ -8,7 +8,7 @@ from Cybernator import Paginator as pag
 
 from pymongo import MongoClient
 
-cluster = MongoClient('mongodb+srv://Vladik012:Vladik0713@vladik012.z3qq6fz.mongodb.net/?retryWrites=true&w=majority')
+cluster = MongoClient('mongodb')
 
 collservers = cluster.vladik012data.collservers
 collection = cluster.ecodb.colldb
@@ -409,4 +409,4 @@ for filename in os.listdir("./cogs"):
 		bot.load_extension(f"cogs.{filename[:-3]}")
 
 
-bot.run('TTAxMTM0ODc0MDM2OTU1OTYwMw.GCOEbP.jAap_V_zH_GBove8P3amBYjVVsLd5nY8laHomg')
+bot.run('DS_TOKEN')
